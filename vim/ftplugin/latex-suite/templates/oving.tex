@@ -1,0 +1,28 @@
+<+	+>	!comp!	!exe!
+%        File: !comp!expand("%:p:t")!comp!
+%     Created: !comp!strftime("%a %b %d %I:00 %p %Y ").substitute(strftime('%Z'), '\<\(\w\)\(\w*\)\>\(\W\|$\)', '\1', 'g')!comp!
+% Last Change: !comp!strftime("%a %b %d %I:00 %p %Y ").substitute(strftime('%Z'), '\<\(\w\)\(\w*\)\>\(\W\|$\)', '\1', 'g')!comp!
+%
+\documentclass[a4paper, norsk, 12pt, final]{article}
+\usepackage[norsk]{babel}
+\usepackage{fancyhdr}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\linespread{1.3} %Halvannen linjeavstand
+%\oddsidemargin 0in
+%\evensidemargin 0in
+%\textwidth 6in
+\pagestyle{plain}
+\begin{document}
+
+\title{<++> - <++>}
+\author{<++> \hspace{0.2in} <++>}
+\pagenumbering{none}
+\maketitle
+\newpage
+\pagenumbering{arabic}
+\section{<++>}
+
+<++>
+
+\end{document}

@@ -1,21 +1,350 @@
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
-version 6.0
-if &cp | set nocp | endif
-let s:cpo_save=&cpo
-set cpo&vim
-nmap gx <Plug>NetrwBrowseX
-nnoremap <silent> <Plug>NetrwBrowseX :call netrw#NetrwBrowseX(expand("<cWORD>"),0)
-let &cpo=s:cpo_save
-unlet s:cpo_save
+" knuts' .vimrc stolen from varius places
+" most notably stevelosh.com
+"
+" Preamble ---------------------------------------------------------------- {{{
+
+filetype off
+"call pathogen#infect('~/.vim/bundle')
+"call pathogen#runtime_append_all_bundles()
+filetype plugin indent on
+set nocompatible
+
+
+au FocusLost * :wa " Write hver gang vim mister fokus
+" }}}
+" Basic options ----------------------------------------------------------- {{{
+
+let mapleader=","
+set hidden
+set encoding=utf-8
+set modelines=0
+set autoindent
+set smartindent
+set tabstop=4
+set shiftwidth=4
+"set sw=2
+set vb t_vb=
+
+" set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
+
+" Attempt to get 256 colors whenever possible
+set t_Co=256
+if &term =~ "xterm"
+ set t_Co=256
+ if has("terminfo")
+   let &t_Sf=nr2char(27).'[3%p1%dm'
+   let &t_Sb=nr2char(27).'[4%p1%dm'
+ else
+   let &t_Sf=nr2char(27).'[3%dm'
+   let &t_Sb=nr2char(27).'[4%dm'
+ endif
+endif
+set textwidth=80
+set formatoptions=qrn1
+set colorcolumn=85
+set gdefault
+set cursorline " hilighter aktiv linje
+set wildmenu " viser forslag til :kommandoer
+set wildmode=list:longest
+set ttyfast
+set showcmd
+set visualbell
+set number
+set spelllang=nb
+set pastetoggle=<F3>
+if has('gui_running')
+	set guioptions-=T  " no toolbar
+	set guioptions-=m " Removes menu
+	set guifont=Consolas
+	colorscheme molokai
+endif
+
+syntax on
+
+" vim-latex-ting
+let g:tex_flavor='latex'
+let g:Tex_DefaultTargetFormat='pdf'
+let g:Tex_MultipleCompileFormats='dvi,pdf'
+let g:Tex_ViewRule_pdf='evince &'
 set backspace=indent,eol,start
-set fileencodings=ucs-bom,utf-8,default,latin1
-set helplang=en
-set history=50
-set nomodeline
-set printoptions=paper:letter
-set ruler
-set runtimepath=~/.vim,/var/lib/vim/addons,/usr/share/vim/vimfiles,/usr/share/vim/vim73,/usr/share/vim/vimfiles/after,/var/lib/vim/addons/after,~/.vim/after
-set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
-" vim: set ft=vim :
+
+map <F2> :NERDTreeToggle<CR>
+filetype plugin on
+colorscheme molokai
+
+" Maximizes the GVIM-window on start
+autocmd GUIEnter * simalt ~x
+
+" }}}
+" Searching and movement -------------------------------------------------- {{{
+
+set ignorecase
+set smartcase
+set gdefault
+set showmatch
+set hlsearch
+set incsearch
+set virtualedit+=block
+
+" Keep search matches in the middle of the window and pulse the line when moving
+" to them.
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" Minimum number of lines between cursor and egde
+set scrolloff=3
+set sidescroll=1
+set sidescrolloff=10
+
+" Error navigation -------------------------------------------------------- {{{
+
+"TODO Noe <leader>-greier med :cn og :cN go!
+
+" }}}
+" Directional keys -------------------------------------------------------- {{{
+
+" j og k oppfører seg som du forventer også med wrappede linjer
+nnoremap j gj
+nnoremap k gk
+
+" Split stuff
+"vertical split and move to it
+nnoremap <leader>v <C-w>v<C-w>l
+
+"ctrl+x to move between splits
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+
+" Window resizing
+nnoremap <left> 5<c-w>>
+nnoremap <right> 5<c-w><
+" }}}
+
+" }}}
+" Mappings ---------------------------------------------------------------- {{{
+
+" Relativt generelle ting på toppen
+
+
+" Det er så langt bort til <ESC> hallo
+inoremap jj <ESC>
+
+" Open a Quickfix window for the last search.
+nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
+
+" Don't move on * (Just hilight the on the cursor)
+nnoremap * *<c-o>
+
+" Fuck you, help key.
+noremap  <F1> :set invfullscreen<CR>
+inoremap <F1> <ESC>:SET INVFULLSCREen<CR>A
+
+" Fuck you too, manual key.
+nnoremap K <nop>
+
+" ,P - toggle paste
+nnoremap <silent> ,P :set paste!<CR>
+
+" Fjerner hilight etter at du har søkt opp div
+nnoremap <leader><space> :noh<cr>
+nnoremap <leader>cc :!cc % -lm
+nnoremap <leader>rr :!./a.our
+
+" Finner matchende parentes med tab
+nnoremap <tab> %
+vnoremap <tab> %
+nnoremap / /\v
+vnoremap / /\v
+
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
+
+
+"Strip all trailing whitespace in the current file
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+
+" Wordwrap current paragraph
+nnoremap <leader>q gqip
+
+
+" tabedit vimrc
+nnoremap <leader>e :tabedit $MYVIMRC<CR>
+" source vimrc
+nnoremap <leader>r :so $MYVIMRC<CR>
+
+" autocomplete
+" stjålet fra ITK sin wiki en gang i tida
+function! CleverTab()
+   if strpart( getline('.'), 0, col('.')-1 ) =~ '^s*$'
+       return "\<Tab>"
+   else
+       return "\<C-N>"
+endfunction
+inoremap <Tab> <C-R>=CleverTab()<CR>
+
+" ,N - toggle line numbers
+function! ToggleLineNumbers() " {{{
+	if &number
+		set nonumber
+	elseif &relativenumber
+		set number
+	else
+		set relativenumber
+	endif
+endfunction " }}}
+nnoremap <silent> ,N :call ToggleLineNumbers()<CR>
+
+" Highlight word {{{
+
+nnoremap <silent> <leader>hh :execute 'match InterestingWord1 /\<<c-r><c-w>\>/'<cr>
+nnoremap <silent> <leader>h1 :execute 'match InterestingWord1 /\<<c-r><c-w>\>/'<cr>
+nnoremap <silent> <leader>h2 :execute '2match InterestingWord2 /\<<c-r><c-w>\>/'<cr>
+nnoremap <silent> <leader>h3 :execute '3match InterestingWord3 /\<<c-r><c-w>\>/'<cr>
+
+" }}}
+" Quick editing ----------------------------------------------------------- {{{
+
+nnoremap <leader>ev <C-w>v<C-w>j:e $MYVIMRC<cr>
+nnoremap <leader>es <C-w>v<C-w>j:e ~/.vim/snippets/<cr>
+nnoremap <leader>eo <C-w>v<C-w>j:e ~/Dropbox/Org<cr>4j
+nnoremap <leader>eh <C-w>v<C-w>j:e ~/.hgrc<cr>
+nnoremap <leader>ep <C-w>v<C-w>j:e ~/.pentadactylrc<cr>
+nnoremap <leader>em <C-w>v<C-w>j:e ~/.mutt/muttrc<cr>
+nnoremap <leader>ez <C-w>v<C-w>j:e ~/lib/dotfiles/zsh<cr>4j
+nnoremap <leader>ek <C-w>v<C-w>j:e ~/lib/dotfiles/keymando/keymandorc.rb<cr>
+
+" }}}
+" Make behave ------------------------------------------------------------- {{{
+
+" Make Y and D behave like you'd expect
+map Y y$
+map D d$
+
+" Keep search matches in the middle of the window and pulse the line when moving
+" to them.
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" Easier to type, and I never use the default behavior.
+noremap H ^
+noremap L g_
+
+" }}}
+" Window manipulation / movement ------------------------------------------ {{{
+
+
+" }}}
+" Buffer movement --------------------------------------------------------- {{{
+
+" ,n - next buffer
+nnoremap <silent> ,n :bnext<CR>
+
+" ,p - previous buffer
+nnoremap <silent> ,p :bprevious<CR>
+
+" }}}
+
+
+" }}}
+" Folding ----------------------------------------------------------------- {{{
+
+
+set foldlevelstart=0
+
+" Make the current location sane.
+nnoremap <c-cr> zvzt
+
+" Space to toggle folds.
+nnoremap <Space> za
+vnoremap <Space> za
+
+" Make zO recursively open whatever top level fold we're in, no matter where the
+" cursor happens to be.
+nnoremap zO zCzO
+
+" Use ,z to "focus" the current fold.
+nnoremap <leader>z zMzvzz
+
+function! MyFoldText() " {{{
+    let line = getline(v:foldstart)
+
+    let nucolwidth = &fdc + &number * &numberwidth
+    let windowwidth = winwidth(0) - nucolwidth - 3
+    let foldedlinecount = v:foldend - v:foldstart
+
+    " expand tabs into spaces
+    let onetab = strpart('          ', 0, &tabstop)
+    let line = substitute(line, '\t', onetab, 'g')
+
+    let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
+    let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
+    return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
+endfunction " }}}
+set foldtext=MyFoldText()
+
+" }}}
+" Various filetype-specific stuff ----------------------------------------- {{{
+" C {{{
+
+augroup ft_c
+    au!
+    au FileType c setlocal foldmethod=manual
+augroup END
+
+" }}}
+" QuickFix {{{
+
+augroup ft_quickfix
+    au!
+    au Filetype qf setlocal colorcolumn=0 nolist nocursorline nowrap
+augroup END
+
+" }}}
+" Vim {{{
+
+augroup ft_vim
+    au!
+
+    au FileType vim setlocal foldmethod=marker
+    au FileType help setlocal textwidth=78
+    au BufWinEnter *.txt if &ft == 'help' | wincmd L | endif
+augroup END
+
+" }}}
+" }}}
+" Plugin settings --------------------------------------------------------- {{{
+" Rainbow Parentheses {{{
+nnoremap <leader>R :RainbowParenthesesToggle<cr>
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+let g:rbpt_max = 16
+" }}}
+" Powerline -------------------------------------------------------------- {{{
+set laststatus=2
+let g:Powerline_symbols='fancy'
+set fillchars+=stl:\ ,stlnc:\
+" }}}
+" }}}
