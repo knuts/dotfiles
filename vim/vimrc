@@ -127,26 +127,20 @@ set sidescrolloff=10
 
 " Directional keys -------------------------------------------------------- {{{
 
-" j og k oppfører seg som du forventer også med wrappede linjer
-nnoremap j gj
-nnoremap k gk
 
 " Split stuff
 "vertical split and move to it
 nnoremap <leader>v <C-w>v<C-w>l
-
-
-
 " Window resizing
 nnoremap <left> 5<c-w>>
 nnoremap <right> 5<c-w><
 nnoremap <up> 5<c-w>+
 nnoremap <down> 5<c-w>-
-
 " }}}
-" Relativt generelle ting på toppen
 
-
+" j og k oppfører seg som du forventer også med wrappede linjer
+nnoremap j gj
+nnoremap k gk
 " Det er så langt bort til <ESC> hallo
 inoremap jj <ESC>
 
@@ -172,6 +166,8 @@ nnoremap <leader><space> :noh<cr>
 " Finner matchende parentes med tab
 nnoremap <tab> %
 vnoremap <tab> %
+
+"" very magic
 nnoremap / /\v
 vnoremap / /\v
 
@@ -179,25 +175,10 @@ inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
 
-
-" Wordwrap current paragraph
-nnoremap <leader>q gqip
-
-
 " tabedit vimrc
-nnoremap <leader>e :tabedit $MYVIMRC<CR>
+nnoremap <leader>ve :tabedit $MYVIMRC<CR>
 " source vimrc
-nnoremap <leader>r :so $MYVIMRC<CR>
-
-" autocomplete
-" stjålet fra ITK sin wiki en gang i tida
-function! CleverTab()
-   if strpart( getline('.'), 0, col('.')-1 ) =~ '^s*$'
-       return "\<Tab>"
-   else
-       return "\<C-N>"
-endfunction
-inoremap <Tab> <C-R>=CleverTab()<CR>
+nnoremap <leader>vr :so $MYVIMRC<CR>
 
 " ,N - toggle line numbers
 function! ToggleLineNumbers() " {{{
@@ -208,7 +189,8 @@ function! ToggleLineNumbers() " {{{
 	else
 		set relativenumber
 	endif
-endfunction " }}}
+endfunction 
+" }}}
 nnoremap <silent> ,N :call ToggleLineNumbers()<CR>
 
 " Highlight word {{{
