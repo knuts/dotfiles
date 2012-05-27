@@ -276,6 +276,14 @@ nnoremap <leader>z zMzvzz
 
 " }}}
 " Various filetype-specific stuff ----------------------------------------- {{{
+" LaTeX {{{
+
+augroup ft_tex
+	au!
+	au FileType tex setlocal foldmethod=manual
+augroup end
+
+" }}}
 " C {{{
 
 augroup ft_c
