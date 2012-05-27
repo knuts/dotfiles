@@ -10,7 +10,14 @@ filetype plugin indent on
 set nocompatible
 
 
-au FocusLost * :wa " Write hver gang vim mister fokus
+" }}}
+
+" gvim-options ------------------------------------------------------------ {{{
+
+" Maximizes the GVIM-window on start
+autocmd GUIEnter * simalt ~x
+
+
 " }}}
 " Basic options ----------------------------------------------------------- {{{
 
@@ -42,7 +49,7 @@ endif
 set textwidth=80
 set formatoptions=qrn1
 set colorcolumn=85
-set gdefault
+set gdefault "Så slipper du slenge på /g på alt
 set cursorline " hilighter aktiv linje
 set wildmenu " viser forslag til :kommandoer
 set wildmode=list:longest
@@ -50,7 +57,6 @@ set ttyfast
 set showcmd
 set visualbell
 set number
-set spelllang=nb
 set pastetoggle=<F3>
 if has('gui_running')
 	set guioptions-=T  " no toolbar
@@ -69,17 +75,16 @@ let g:Tex_MultipleCompileFormats='dvi,pdf'
 let g:Tex_ViewRule_pdf='evince &'
 set backspace=indent,eol,start
 
-" Erstatter \Pi med unicode-tegnet i mathmode i latex bl.a.
-set conceallevel=2
-hi Conceal guibg=NONE ctermbg=NONE
+set conceallevel=2 " Erstatter \Pi med unicode-tegnet i mathmode i latex bl.a.
+"Prøver å gjøre conceal litt mindre stygg
+hi Conceal guibg=NONE ctermbg=NONE 
 
-map <F2> :NERDTreeToggle<CR>
 filetype plugin on
 colorscheme molokai
 
-" Maximizes the GVIM-window on start
-autocmd GUIEnter * simalt ~x
-
+" Spelling {{{
+set spelllang=nb
+" }}}
 " Backups {{{
 " Store temporary files in a central spot
 set backup
@@ -90,7 +95,7 @@ set directory=~/.vim-tmp//,~/.tmp//,~/tmp//,/var/tmp//,/tmp//
 "set backupdir=~/.vim/tmp/backup// " backups
 "set directory=~/.vim/tmp/swap//   " swap files
 "set backup                        " enable backups
-""set noswapfile                    " It's 2012, Vim.
+set noswapfile                    " It's 2012, Vim.
 " }}}
 
 
@@ -107,8 +112,6 @@ set virtualedit+=block
 
 " Keep search matches in the middle of the window and pulse the line when moving
 " to them. zv ?
-"nnoremap n nzzzv
-"nnoremap N Nzzzv
 
 nnoremap n nzz
 nnoremap N Nzz
@@ -117,6 +120,10 @@ nnoremap N Nzz
 set scrolloff=3
 set sidescroll=1
 set sidescrolloff=10
+
+
+" }}}
+" Mappings ---------------------------------------------------------------- {{{
 
 " Directional keys -------------------------------------------------------- {{{
 
@@ -142,10 +149,6 @@ nnoremap <up> 5<c-w>+
 nnoremap <down> 5<c-w>-
 
 " }}}
-
-" }}}
-" Mappings ---------------------------------------------------------------- {{{
-
 " Relativt generelle ting på toppen
 
 
@@ -159,6 +162,7 @@ nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 nnoremap * *<c-o>
 
 
+map <F2> :NERDTreeToggle<CR>
 
 " Fuck you, help key.
 noremap  <F1> :set invfullscreen<CR>
