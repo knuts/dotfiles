@@ -3,9 +3,19 @@ Således kloner du denne greia så du får fint vim-oppsett.
 cd ~
 git clone greia ~/.vim
 ln -s ~/dotfiles/vim/vimrc ~/.vimrc
+ln -s ~/dotfiles/vim/ ~/.vim
 
+For å legge til submodules
+git submodule add git://github.com/scrooloose/nerdtree.git vim/bundle/nerdtree
 
 For å 'pulle' alle submodulene (fjaset som ligger i bundle/blabla/)
 cd ~/.vim
 git submodule init
 git submodule update
+
+For å oppdatere en gitt plugin
+cd ~/.vim/bundle/fugitive
+git pull origin master
+
+For å oppdatere alle plugins på en gang
+git submodule foreach git pull origin master
