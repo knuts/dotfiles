@@ -14,6 +14,14 @@ au FocusLost * :wa " Write hver gang vim mister fokus
 " }}}
 " Basic options ----------------------------------------------------------- {{{
 
+" Options that need a specific version
+
+if (version >= 730)
+	set colorcolumn=85
+	" Erstatter \Pi med unicode-tegnet i mathmode i latex bl.a.
+	set conceallevel=2
+	hi Conceal guibg=NONE ctermbg=NONE
+endif
 
 let mapleader=","
 
@@ -41,7 +49,6 @@ if &term =~ "xterm"
 endif
 set textwidth=80
 set formatoptions=qrn1
-set colorcolumn=85
 set gdefault
 set cursorline " hilighter aktiv linje
 set wildmenu " viser forslag til :kommandoer
@@ -69,9 +76,6 @@ let g:Tex_MultipleCompileFormats='dvi,pdf'
 let g:Tex_ViewRule_pdf='evince &'
 set backspace=indent,eol,start
 
-" Erstatter \Pi med unicode-tegnet i mathmode i latex bl.a.
-set conceallevel=2
-hi Conceal guibg=NONE ctermbg=NONE
 
 map <F2> :NERDTreeToggle<CR>
 filetype plugin on
