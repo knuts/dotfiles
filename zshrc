@@ -1,5 +1,5 @@
 export ZSH="$HOME/.oh-my-zsh"
-export ZSH_THEME="prose"
+export ZSH_THEME="dstufft"
 export DISABLE_AUTO_UPDATE="true"
 plugins=(command-coloring git)
 
