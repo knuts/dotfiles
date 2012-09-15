@@ -53,10 +53,7 @@ fi
 if [ -f ~/.ssh/config ]; then
     hosts=($hosts `grep ^Host ~/.ssh/config | sed s/Host\ // | egrep -v '^\*$'`)
 fi
-hosts=($hosts 'knutskas@login.stud.ntnu.no' 'knuts@login.bagateller.com' 'knuts@login.samfundet.no' 'snoogi@server9.subsys.no', 'knutskas@selje.idi.ntnu.no')
-if [ "$hosts" ]; then
-    zstyle ':completion:*:hosts' hosts $hosts
-fi
+
 
 autoload -U compinit
 compinit
