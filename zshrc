@@ -31,7 +31,7 @@ alias l='ls -lha'
 alias ssh='ssh'
 
 # Nice prompt
-PROMPT=$'%j %{\e[0;32m%}%n%{\e[1;37m%}@%{\e[0;33m%}%m%{\e[m%}:%{\e[1;34m%}%30<..<%~%{\e[m%}%(!.#.$) '
+#PROMPT=$'%j %{\e[0;32m%}%n%{\e[1;37m%}@%{\e[0;33m%}%m%{\e[m%}:%{\e[1;34m%}%30<..<%~%{\e[m%}%(!.#.$) '
 #PROMPT=$'%j %{\e[1;30m%}%n%{\e[0;37m%}@%{\e[1;34m%}%m%{\e[m%}:%{\e[1;33m%}%30<..<%~%{\e[m%}%(!.#.>) '
 
 PATH=/usr/lib/ccache:$PATH:/sbin:/usr/sbin:$HOME/bin
