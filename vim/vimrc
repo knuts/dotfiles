@@ -10,7 +10,20 @@ filetype plugin indent on
 set nocompatible
 
 
-au FocusLost * :wa " Write hver gang vim mister fokus
+" }}}
+
+" gvim-options ------------------------------------------------------------ {{{
+
+" Maximizes the GVIM-window on start
+
+if has('gui_running')
+	autocmd GUIEnter * simalt ~x
+	set guioptions-=T  " no toolbar
+	set guioptions-=m " Removes menu
+	set guifont=Consolas
+	colorscheme molokai
+endif
+
 " }}}
 " Basic options ----------------------------------------------------------- {{{
 
@@ -50,6 +63,7 @@ endif
 set textwidth=80
 set formatoptions=qrn1
 set gdefault
+set gdefault "Så slipper du slenge på /g på alt
 set cursorline " hilighter aktiv linje
 set wildmenu " viser forslag til :kommandoer
 set wildmode=list:longest
@@ -57,14 +71,7 @@ set ttyfast
 set showcmd
 set visualbell
 set number
-set spelllang=nb
 set pastetoggle=<F3>
-if has('gui_running')
-	set guioptions-=T  " no toolbar
-	set guioptions-=m " Removes menu
-	set guifont=Consolas
-	colorscheme molokai
-endif
 
 syntax on
 
@@ -77,13 +84,12 @@ let g:Tex_ViewRule_pdf='evince &'
 set backspace=indent,eol,start
 
 
-map <F2> :NERDTreeToggle<CR>
 filetype plugin on
 colorscheme molokai
 
-" Maximizes the GVIM-window on start
-autocmd GUIEnter * simalt ~x
-
+" Spelling {{{
+set spelllang=nb
+" }}}
 " Backups {{{
 " Store temporary files in a central spot
 set backup
@@ -94,7 +100,7 @@ set directory=~/.vim-tmp//,~/.tmp//,~/tmp//,/var/tmp//,/tmp//
 "set backupdir=~/.vim/tmp/backup// " backups
 "set directory=~/.vim/tmp/swap//   " swap files
 "set backup                        " enable backups
-""set noswapfile                    " It's 2012, Vim.
+set noswapfile                    " It's 2012, Vim.
 " }}}
 
 
@@ -109,50 +115,31 @@ set hlsearch
 set incsearch
 set virtualedit+=block
 
-" Keep search matches in the middle of the window and pulse the line when moving
-" to them. zv ?
-"nnoremap n nzzzv
-"nnoremap N Nzzzv
-
-nnoremap n nzz
-nnoremap N Nzz
-
 " Minimum number of lines between cursor and egde
 set scrolloff=3
 set sidescroll=1
 set sidescrolloff=10
 
+
+" }}}
+" Mappings ---------------------------------------------------------------- {{{
+
 " Directional keys -------------------------------------------------------- {{{
 
-" j og k oppfører seg som du forventer også med wrappede linjer
-nnoremap j gj
-nnoremap k gk
 
 " Split stuff
 "vertical split and move to it
 nnoremap <leader>v <C-w>v<C-w>l
-
-"ctrl+x to move between splits
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
-
 " Window resizing
 nnoremap <left> 5<c-w>>
 nnoremap <right> 5<c-w><
 nnoremap <up> 5<c-w>+
 nnoremap <down> 5<c-w>-
-
 " }}}
 
-" }}}
-" Mappings ---------------------------------------------------------------- {{{
-
-" Relativt generelle ting på toppen
-
-
+" j og k oppfører seg som du forventer også med wrappede linjer
+nnoremap j gj
+nnoremap k gk
 " Det er så langt bort til <ESC> hallo
 inoremap jj <ESC>
 
@@ -163,6 +150,7 @@ nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 nnoremap * *<c-o>
 
 
+map <F2> :NERDTreeToggle<CR>
 
 " Fuck you, help key.
 noremap  <F1> :set invfullscreen<CR>
@@ -177,6 +165,8 @@ nnoremap <leader><space> :noh<cr>
 " Finner matchende parentes med tab
 nnoremap <tab> %
 vnoremap <tab> %
+
+"" very magic
 nnoremap / /\v
 vnoremap / /\v
 
@@ -184,25 +174,10 @@ inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
 
-
-" Wordwrap current paragraph
-nnoremap <leader>q gqip
-
-
 " tabedit vimrc
-nnoremap <leader>e :tabedit $MYVIMRC<CR>
+nnoremap <leader>ve :tabedit $MYVIMRC<CR>
 " source vimrc
-nnoremap <leader>r :so $MYVIMRC<CR>
-
-" autocomplete
-" stjålet fra ITK sin wiki en gang i tida
-function! CleverTab()
-   if strpart( getline('.'), 0, col('.')-1 ) =~ '^s*$'
-       return "\<Tab>"
-   else
-       return "\<C-N>"
-endfunction
-inoremap <Tab> <C-R>=CleverTab()<CR>
+nnoremap <leader>vr :so $MYVIMRC<CR>
 
 " ,N - toggle line numbers
 function! ToggleLineNumbers() " {{{
@@ -213,8 +188,9 @@ function! ToggleLineNumbers() " {{{
 	else
 		set relativenumber
 	endif
-endfunction " }}}
-nnoremap <silent> ,N :call ToggleLineNumbers()<CR>
+endfunction 
+" }}}
+nnoremap <silent> <leader>N :call ToggleLineNumbers()<CR>
 
 " Highlight word {{{
 
@@ -226,44 +202,28 @@ nnoremap <silent> <leader>h3 :execute '3match InterestingWord3 /\<<c-r><c-w>\>/'
 " }}}
 " Make behave ------------------------------------------------------------- {{{
 
-" Make Y and D behave like you'd expect
-map Y y$
-map D d$
-
-" Yank til clipboard
-map <leader>y "*y
-
 " Keep search matches in the middle of the window and pulse the line when moving
 " to them.
-nnoremap n nzzzv
-nnoremap N Nzzzv
+nnoremap n nzz
+nnoremap N Nzz
 
 " Easier to type, and I never use the default behavior.
 noremap H ^
 noremap L g_
 
 " }}}
-" Window manipulation / movement ------------------------------------------ {{{
-
-
-" }}}
 " Buffer movement --------------------------------------------------------- {{{
 
+" ,bd - delete buffer
+nnoremap <silent> <leader>bd :bdelete<CR>
 " ,n - next buffer
-nnoremap <silent> ,n :bnext<CR>
-
+nnoremap <silent> <leader>n :bnext<CR>
 " ,p - previous buffer
-nnoremap <silent> ,p :bprevious<CR>
-
+nnoremap <silent> <leader>p :bprevious<CR>
 " }}}
-
-
 " }}}
 " Folding ----------------------------------------------------------------- {{{
-
-
 set foldlevelstart=0
-
 " Make the current location sane.
 nnoremap <c-cr> zvzt
 
@@ -320,7 +280,7 @@ augroup END
 " Rainbow Parentheses {{{
 nnoremap <leader>R :RainbowParenthesesToggle<cr>
 let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
+    \ ['brown',       'RoyalBlue4'],
     \ ['Darkblue',    'SeaGreen3'],
     \ ['darkgray',    'DarkOrchid3'],
     \ ['darkgreen',   'firebrick3'],
