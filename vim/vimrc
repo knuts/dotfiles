@@ -14,7 +14,6 @@ set nocompatible
 
 " gvim-options ------------------------------------------------------------ {{{
 
-" Maximizes the GVIM-window on start
 
 if has('gui_running')
 	autocmd GUIEnter * simalt ~x
@@ -22,7 +21,18 @@ if has('gui_running')
 	set guioptions-=m " Removes menu
 	set guifont=Consolas
 	colorscheme molokai
+	set backup
+	set backupdir=C:\\vimptemp
+else
+
+	" Store temporary files in a central spot
+	set backup
+	set backupdir=~/.vim-tmp//,~/.tmp//,~/tmp//,/var/tmp//,/tmp//
+	set directory=~/.vim-tmp//,~/.tmp//,~/tmp//,/var/tmp//,/tmp//
+
 endif
+
+
 
 " }}}
 " Basic options ----------------------------------------------------------- {{{
@@ -90,18 +100,7 @@ colorscheme molokai
 " Spelling {{{
 set spelllang=nb
 " }}}
-" Backups {{{
-" Store temporary files in a central spot
-set backup
-set backupdir=~/.vim-tmp//,~/.tmp//,~/tmp//,/var/tmp//,/tmp//
-set directory=~/.vim-tmp//,~/.tmp//,~/tmp//,/var/tmp//,/tmp//
-
-"set undodir=~/.vim/tmp/undo//     " undo files
-"set backupdir=~/.vim/tmp/backup// " backups
-"set directory=~/.vim/tmp/swap//   " swap files
-"set backup                        " enable backups
 set noswapfile                    " It's 2012, Vim.
-" }}}
 
 
 " }}}
