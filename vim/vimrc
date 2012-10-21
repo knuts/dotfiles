@@ -21,8 +21,9 @@ if has('gui_running')
 	set guioptions-=m " Removes menu
 	set guifont=Consolas
 	colorscheme molokai
-	set backup
-	set backupdir=C:\\vimptemp
+	set nobackup
+	"set backup
+	"set backupdir=C:\\vimptemp
 else
 
 	" Store temporary files in a central spot
