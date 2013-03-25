@@ -162,10 +162,6 @@ nnoremap K <nop>
 " Fjerner hilight etter at du har søkt opp div
 nnoremap <leader><space> :noh<cr>
 
-" Finner matchende parentes med tab
-nnoremap <tab> %
-vnoremap <tab> %
-
 "" very magic
 nnoremap / /\v
 vnoremap / /\v
