@@ -3,7 +3,12 @@ export ZSH_THEME="dstufft"
 export DISABLE_AUTO_UPDATE="true"
 plugins=(command-coloring git)
 
+
 source $ZSH/oh-my-zsh.sh
+
+# Dette må være her for å få 256 farger i ymse ting
+export TERM="xterm-256color"
+
 
 alias mv='nocorrect mv'       # no spelling correction on mv
 alias cp='nocorrect cp'       # no spelling correction on cp
@@ -21,7 +26,10 @@ zle -N self-insert url-quote-magic
 
 bindkey -e      # Emacs-style commandline editing
 
+
+# LANGUAGE, LC_ALL
 export LANG=en_DK.UTF-8
+
 
 alias ls='ls --color=auto -F'
 alias ll='ls -CA'
