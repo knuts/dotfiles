@@ -20,7 +20,8 @@ if has('gui_running')
 	set guioptions-=T  " no toolbar
 	set guioptions-=m " Removes menu
 	set guifont=Consolas
-	colorscheme molokai
+	"colorscheme molokai
+	colorscheme badwolf
 	set nobackup
 	"set backup
 	"set backupdir=C:\\vimptemp
