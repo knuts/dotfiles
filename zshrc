@@ -7,8 +7,8 @@ plugins=(command-coloring git)
 source $ZSH/oh-my-zsh.sh
 
 # Dette må være her for å få 256 farger i ymse ting
-export TERM="xterm-256color"
-
+#export TERM="xterm-256color"
+export TERM="screen-256color"
 
 alias mv='nocorrect mv'       # no spelling correction on mv
 alias cp='nocorrect cp'       # no spelling correction on cp
@@ -64,7 +64,7 @@ fi
 
 
 autoload -U compinit
-compinit
+compinit -u
 # End of lines added by compinstall
 
 #export LC_CTYPE="no_NO.ISO8859-1"
