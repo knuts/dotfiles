@@ -25,3 +25,6 @@
 [submodule "vim/bundle/rainbow-parenthesis"]
 	path = vim/bundle/rainbow-parenthesis
 	url = git://github.com/vim-scripts/Rainbow-Parenthesis.git
+[submodule "vim/bundle/ctrlp"]
+	path = vim/bundle/ctrlp
+	url = git@github.com:kien/ctrlp.vim
