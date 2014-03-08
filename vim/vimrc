@@ -4,8 +4,8 @@
 " Preamble ---------------------------------------------------------------- {{{
 
 filetype off
-"call pathogen#infect('~/.vim/bundle')
-call pathogen#incubate()
+syntax on
+execute pathogen#incubate()
 filetype plugin indent on
 set nocompatible
 
@@ -82,8 +82,6 @@ set showcmd
 set visualbell
 set number
 set pastetoggle=<F3>
-
-syntax on
 
 
 " vim-latex-ting
