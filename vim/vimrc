@@ -46,7 +46,7 @@ if (version >= 730)
 	hi Conceal guibg=NONE ctermbg=NONE
 endif
 
-let mapleader=","
+let mapleader="\<Space>"
 
 set hidden
 set encoding=utf-8
