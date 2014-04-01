@@ -247,6 +247,7 @@ augroup ft_python
     au FileType python if exists("python_space_error_highlight") | unlet python_space_error_highlight | endif
 
     au FileType python iabbrev <buffer> afo assert False, "Okay"
+
 	nnoremap <leader>p :pyfile %<cr>
 augroup END
 
