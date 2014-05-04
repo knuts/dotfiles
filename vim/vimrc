@@ -125,6 +125,8 @@ set sidescrolloff=10
 " !
 nnoremap <leader>w :w<cr>
 
+" Change working directory
+nnoremap <leader>cd :cd %:p:h<cr>
 
 " Directional keys -------------------------------------------------------- {{{
 
